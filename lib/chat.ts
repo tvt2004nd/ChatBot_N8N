@@ -1,5 +1,6 @@
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
+
 export type HistoryItem = {
   id: number;
   role: string;
@@ -7,28 +8,34 @@ export type HistoryItem = {
   content: string;
   created_at: Date;
 };
-export async function postMessage(chatInput: string, sessionId: string) {
-  try {
-    const res = await axios.post(process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL!, {
-      chatInput: chatInput,
-      sessionId: sessionId,
-    });
-    const data = res.data;
-    return data;
-  } catch (err) {
-    throw err;
+export async function getHistoryMessage(
+  sessionId?: string,
+): Promise<HistoryItem[]> {
+  const url = process.env.NEXT_PUBLIC_N8N_HISTORY_CHAT_URL;
+
+  if (!url) {
+    throw new Error("Thiếu N8N_HISTORY_CHAT_URL trong .env");
   }
-}
-export async function getHistoryMessage(sessionId: string) {
+
   try {
-    const res = await axios.get(process.env.NEXT_PUBLIC_N8N_HISTORY_CHAT_URL!, {
-      params: {
-        sessionId,
-      },
+    const res = await axios.get(url, {
+      params: { sessionId },
     });
 
-    return res.data;
+    let data = res.data;
+    
+    // N8N often returns wrapped arrays or objects
+    if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0])) {
+      data = data[0];
+    }
+    if (data && typeof data === 'object' && !Array.isArray(data)) {
+      if (Array.isArray(data.data)) data = data.data;
+      else if (Array.isArray(data.history)) data = data.history;
+    }
+
+    return Array.isArray(data) ? data : [];
   } catch (err) {
-    throw err;
+    console.error(err);
+    return [];
   }
 }
