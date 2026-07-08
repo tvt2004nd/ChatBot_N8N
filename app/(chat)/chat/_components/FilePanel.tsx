@@ -11,8 +11,13 @@ import {
   BsFileEarmarkPdf,
   BsFileEarmarkExcel,
   BsFileEarmarkWord,
-  BsFileEarmark
+  BsFileEarmark,
 } from "react-icons/bs";
+
+function getErrorMessage(error: unknown, fallback: string) {
+  return error instanceof Error ? error.message : fallback;
+}
+
 export default function FilePanel() {
   const { files, isLoading, loadFiles, uploadAndAddFile, deleteAndRemoveFile } =
     useFileContext();
@@ -32,8 +37,8 @@ export default function FilePanel() {
     setIsUploading(true);
     try {
       await uploadAndAddFile(file);
-    } catch (err: any) {
-      alert(err.message || "Lỗi upload file");
+    } catch (err: unknown) {
+      alert(getErrorMessage(err, "Lỗi upload file"));
     } finally {
       setIsUploading(false);
       e.target.value = "";
@@ -46,8 +51,8 @@ export default function FilePanel() {
     setDeletingId(fileId);
     try {
       await deleteAndRemoveFile(fileId);
-    } catch (err: any) {
-      alert(err.message || "Lỗi xóa file");
+    } catch (err: unknown) {
+      alert(getErrorMessage(err, "Lỗi xóa file"));
     } finally {
       setDeletingId(null);
     }

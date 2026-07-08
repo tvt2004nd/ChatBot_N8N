@@ -1,6 +1,5 @@
 "use server";
 import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
 
 export type HistoryItem = {
   id: number;
