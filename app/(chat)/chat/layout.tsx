@@ -1,4 +1,5 @@
 import ListChat from "./_components/ListChat";
+import FilePanel from "./_components/FilePanel";
 import style from "../../../style/layout.module.css";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -8,7 +9,17 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className={style.sidebarTitle}>Lịch sử Chat</div>
         <ListChat />
       </nav>
-      <main className={style.mainContent}>{children}</main>
+      <main className={style.mainContent}>
+        <header className={style.chatHeader}>
+          <h2 className={style.chatHeaderTitle}>Cuộc trò chuyện</h2>
+        </header>
+        <div className={style.chatArea}>
+          {children}
+        </div>
+      </main>
+      <aside className={style.rightSidebar}>
+        <FilePanel />
+      </aside>
     </div>
   );
 }

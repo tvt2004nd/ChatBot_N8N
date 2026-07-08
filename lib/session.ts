@@ -1,3 +1,4 @@
+"use server";
 import axios from "axios";
 
 export type sessionItem = {
@@ -6,7 +7,7 @@ export type sessionItem = {
   created_at: string;
 };
 export default async function getAllSession(): Promise<sessionItem[]> {
-  const url = process.env.NEXT_PUBLIC_N8N_SESSION_CHAT;
+  const url = process.env.N8N_SESSION_CHAT;
   if (!url) {
     throw new Error("không tìm thấy đường dẫn");
   }
@@ -21,7 +22,15 @@ export default async function getAllSession(): Promise<sessionItem[]> {
       if (Array.isArray(data.data)) data = data.data;
     }
 
-    return Array.isArray(data) ? data : [];
+    if (Array.isArray(data)) {
+      data.sort((a, b) => {
+        const timeA = new Date(a.created_at || 0).getTime();
+        const timeB = new Date(b.created_at || 0).getTime();
+        return timeB - timeA;
+      });
+      return data;
+    }
+    return [];
   } catch (err) {
     console.error(err);
     return [];
@@ -31,7 +40,7 @@ export async function updateTitle(
   sessionId: string,
   title: string,
 ): Promise<sessionItem> {
-  const url = process.env.NEXT_PUBLIC_N8N_SESSION_CHAT;
+  const url = process.env.N8N_SESSION_CHAT;
   if (!url) {
     throw new Error("không tìm thấy đường dẫn");
   }
@@ -43,7 +52,7 @@ export async function updateTitle(
   }
 }
 export async function deleteSession(sessionId: string): Promise<sessionItem> {
-  const url = process.env.NEXT_PUBLIC_N8N_SESSION_CHAT;
+  const url = process.env.N8N_SESSION_CHAT;
   if (!url) {
     throw new Error("không tìm thấy đường dẫn");
   }

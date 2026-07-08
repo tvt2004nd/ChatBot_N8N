@@ -1,17 +1,20 @@
 "use client";
 import getAllSession, { deleteSession, updateTitle } from "@/lib/session";
-import { Session } from "inspector/promises";
+
 import Link from "next/link";
 import { sessionItem } from "@/lib/session";
 import style from "../../../../style/layout.module.css";
 import { BsClockHistory } from "react-icons/bs";
 import { useEffect, useState } from "react";
 
+import { usePathname } from "next/navigation";
+
 export default function ListChat() {
   const [listSession, setListSession] = useState<sessionItem[]>([]);
   const [openMenuId, setOpenMenuId] = useState<string | number | null>(null);
   const [title, setTitle] = useState<string>("");
   const [renameSession, setRenameSession] = useState<sessionItem | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchSession = async () => {
@@ -19,7 +22,7 @@ export default function ListChat() {
       setListSession(data);
     };
     fetchSession();
-  }, []);
+  }, [pathname]);
   // xử lí  mở cái menu
 
   const toggleMenu = (e: React.MouseEvent, id: string | number) => {
@@ -50,9 +53,7 @@ export default function ListChat() {
   // xử lí xóa session
   const handelDeleteSession = async (sessionId: string) => {
     await deleteSession(sessionId);
-    setListSession(prev =>
-      prev.filter(s => s.id !== sessionId)
-    );
+    setListSession((prev) => prev.filter((s) => s.id !== sessionId));
   };
   return (
     <>
@@ -62,40 +63,42 @@ export default function ListChat() {
           Đoạn chat mới
         </Link>
       </div>
-      <ul className={style.list}>
-        {listSession.map((session) => (
-          <li key={session.id} className={style.listItem}>
-            <Link href={`/chat/${session.id}`} className={style.link}>
-              <span className={style.icon}>
-                <BsClockHistory />
-              </span>
-              <span className={style.linkText}>{session.title}</span>
-            </Link>
-            <button
-              className={style.buttonDetail}
-              onClick={(e) => toggleMenu(e, session.id)}
-            >
-              &#8285;
-            </button>
-            <div
-              className={`${style.actionMenu} ${openMenuId !== session.id ? style.hidden : ""}`}
-            >
+      <div className={style.historyScrollArea}>
+        <ul className={style.list}>
+          {listSession.map((session) => (
+            <li key={session.id} className={style.listItem}>
+              <Link href={`/chat/${session.id}`} className={style.link}>
+                <span className={style.icon}>
+                  <BsClockHistory />
+                </span>
+                <span className={style.linkText}>{session.title}</span>
+              </Link>
               <button
-                className={style.actionButton}
-                onClick={(e) => handleOpenRename(e, session)}
+                className={style.buttonDetail}
+                onClick={(e) => toggleMenu(e, session.id)}
               >
-                Đổi tên
+                &#8285;
               </button>
-              <button
-                onClick={() => handelDeleteSession(session.id)}
-                className={`${style.actionButton} ${style.deleteButton}`}
+              <div
+                className={`${style.actionMenu} ${openMenuId !== session.id ? style.hidden : ""}`}
               >
-                Xóa
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
+                <button
+                  className={style.actionButton}
+                  onClick={(e) => handleOpenRename(e, session)}
+                >
+                  Đổi tên
+                </button>
+                <button
+                  onClick={() => handelDeleteSession(session.id)}
+                  className={`${style.actionButton} ${style.deleteButton}`}
+                >
+                  Xóa
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       {renameSession && (
         <div className={style.modalOverlay}>

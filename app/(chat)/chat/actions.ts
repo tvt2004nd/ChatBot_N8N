@@ -3,7 +3,7 @@
 import axios from "axios";
 
 export async function addMessageToQueue(chatInput: string, sessionId?: string) {
-  const url = process.env.NEXT_PUBLIC_N8N_WEBHOOK_URL;
+  const url = process.env.N8N_WEBHOOK_URL;
   if (!url) throw new Error("Thiếu N8N_WEBHOOK_URL trong .env");
 
   const res = await axios.post(url, {
@@ -19,7 +19,7 @@ export async function addMessageToQueue(chatInput: string, sessionId?: string) {
 }
 
 export async function checkJobStatus(jobId: string) {
-  const url = process.env.NEXT_PUBLIC_N8N_STATUS_URL;
+  const url = process.env.N8N_STATUS_URL;
   if (!url) throw new Error("Thiếu N8N_STATUS_URL trong .env");
 
   const res = await axios.get(url, { params: { jobId: jobId } });

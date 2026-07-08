@@ -1,3 +1,4 @@
+"use server";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -11,7 +12,7 @@ export type HistoryItem = {
 export async function getHistoryMessage(
   sessionId?: string,
 ): Promise<HistoryItem[]> {
-  const url = process.env.NEXT_PUBLIC_N8N_HISTORY_CHAT_URL;
+  const url = process.env.N8N_HISTORY_CHAT_URL;
 
   if (!url) {
     throw new Error("Thiếu N8N_HISTORY_CHAT_URL trong .env");

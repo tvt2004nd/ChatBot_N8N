@@ -4,16 +4,17 @@ import { addMessageToQueue, checkJobStatus } from "../actions";
 import { getHistoryMessage, HistoryItem } from "@/lib/chat";
 import style from "../../../../style/chat.module.css";
 import { useRouter } from "next/navigation";
+
 type props = {
   sessionId?: string;
 };
+
 export default function Message({ sessionId }: props) {
   const [input, setInput] = useState("");
   const router = useRouter();
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -122,6 +123,7 @@ export default function Message({ sessionId }: props) {
         )}
         <div ref={bottomRef}></div>
       </div>
+
       <div className={style.inputArea}>
         <input
           type="text"

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { FileProvider } from "./FileContext";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -13,7 +14,9 @@ export default function Layout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <FileProvider>{children}</FileProvider>
+      </body>
     </html>
   );
 }
