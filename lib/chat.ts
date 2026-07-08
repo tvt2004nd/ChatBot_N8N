@@ -1,7 +1,9 @@
 "use server";
 import axios from "axios";
+
 axios.defaults.headers.common["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
 import { NextRequest, NextResponse } from "next/server";
+
 
 export type HistoryItem = {
   id: number;

@@ -4,7 +4,6 @@ import React, {
   createContext,
   useState,
   useCallback,
-  ReactNode,
 } from "react";
 import {
   FileItem,
