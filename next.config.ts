@@ -9,11 +9,13 @@ const serverActionOrigins = [
 ];
 
 const nextConfig: NextConfig = {
-  /* config options here */
   experimental: {
     serverActions: {
+
       allowedOrigins: Array.from(new Set(serverActionOrigins)),
       bodySizeLimit: "20mb",
+
+
     },
   },
 };
