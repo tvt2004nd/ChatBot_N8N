@@ -46,29 +46,32 @@ export function FileProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const uploadAndAddFile = useCallback(async (file: File) => {
-    if (!allowType.includes(file.type)) {
-      throw new Error("File không đúng định dạng");
-    }
-    // Check trùng file đã tải lên
-    const isDuplicate = files.some(
-      (f) => f.file_name.toLowerCase() === file.name.toLowerCase()
-    );
-    if (isDuplicate) {
-      throw new Error(`File "${file.name}" đã được tải lên rồi`);
-    }
-    const formData = new FormData();
-    formData.append("data", file);
-    const result = await uploadFileApi(formData);
+  const uploadAndAddFile = useCallback(
+    async (file: File) => {
+      if (!allowType.includes(file.type)) {
+        throw new Error("File không đúng định dạng");
+      }
+      // Check trùng file đã tải lên
+      const isDuplicate = files.some(
+        (f) => f.file_name.toLowerCase() === file.name.toLowerCase(),
+      );
+      if (isDuplicate) {
+        throw new Error(`File "${file.name}" đã được tải lên rồi`);
+      }
+      const formData = new FormData();
+      formData.append("data", file);
+      const result = await uploadFileApi(formData);
 
-    const newFile: FileItem = {
-      file_id: result.file_id ?? Date.now().toString(),
-      file_name: result.file_name ?? file.name,
-      modified_time: result.modified_time ?? new Date(),
-      source_url: result.source_url ?? "",
-    };
-    setFiles((prev) => [...prev, newFile]);
-  }, [files]);
+      const newFile: FileItem = {
+        file_id: result.file_id ?? Date.now().toString(),
+        file_name: result.file_name ?? file.name,
+        modified_time: result.modified_time ?? new Date(),
+        source_url: result.source_url ?? "",
+      };
+      setFiles((prev) => [...prev, newFile]);
+    },
+    [files],
+  );
 
   const deleteAndRemoveFile = useCallback(async (fileId: string) => {
     await deleteFileApi(fileId);
