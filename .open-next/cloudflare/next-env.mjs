@@ -1,0 +1,3 @@
+export const production = {"N8N_WEBHOOK_URL":"https://n8n.cpc1hn.com/webhook/chat","N8N_HISTORY_CHAT_URL":"https://n8n.cpc1hn.com/webhook/history","N8N_STATUS_URL":"https://n8n.cpc1hn.com/webhook/chat-status","N8N_SESSION_CHAT":"https://n8n.cpc1hn.com/webhook/session","N8N_FILE":"https://n8n.cpc1hn.com/webhook/file"};
+export const development = {"N8N_WEBHOOK_URL":"https://n8n.cpc1hn.com/webhook/chat","N8N_HISTORY_CHAT_URL":"https://n8n.cpc1hn.com/webhook/history","N8N_STATUS_URL":"https://n8n.cpc1hn.com/webhook/chat-status","N8N_SESSION_CHAT":"https://n8n.cpc1hn.com/webhook/session","N8N_FILE":"https://n8n.cpc1hn.com/webhook/file"};
+export const test = {};

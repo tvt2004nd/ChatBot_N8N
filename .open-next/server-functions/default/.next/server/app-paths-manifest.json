@@ -1,0 +1,9 @@
+{
+  "/(chat)/chat/[sessionId]/page": "app/(chat)/chat/[sessionId]/page.js",
+  "/(chat)/chat/page": "app/(chat)/chat/page.js",
+  "/(file)/file/page": "app/(file)/file/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/page": "app/page.js"
+}

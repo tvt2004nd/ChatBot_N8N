@@ -14,6 +14,7 @@
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy"
   },
   "dependencies": {
+    "@netlify/plugin-nextjs": "^5.15.12",
     "axios": "^1.18.1",
     "bullmq": "^5.79.2",
     "ioredis": "^5.10.1",

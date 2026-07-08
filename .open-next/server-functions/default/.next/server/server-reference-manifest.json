@@ -1,0 +1,222 @@
+{
+  "node": {
+    "40d065504542ee5ae72f36543bbf718d27279e9ba5": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "uploadFile",
+          "filename": "lib/file.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "uploadFile",
+          "filename": "lib/file.ts"
+        },
+        "app/(file)/file/page": {
+          "moduleId": 70718,
+          "async": false,
+          "exportedName": "uploadFile",
+          "filename": "lib/file.ts"
+        },
+        "app/_not-found/page": {
+          "moduleId": 39990,
+          "async": false,
+          "exportedName": "uploadFile",
+          "filename": "lib/file.ts"
+        },
+        "app/page": {
+          "moduleId": 9415,
+          "async": false,
+          "exportedName": "uploadFile",
+          "filename": "lib/file.ts"
+        }
+      },
+      "filename": "lib/file.ts",
+      "exportedName": "uploadFile"
+    },
+    "404b6d504cd14a267457d14ebce2e10ad2a0c2b3cc": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "deleteFile",
+          "filename": "lib/file.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "deleteFile",
+          "filename": "lib/file.ts"
+        },
+        "app/(file)/file/page": {
+          "moduleId": 70718,
+          "async": false,
+          "exportedName": "deleteFile",
+          "filename": "lib/file.ts"
+        },
+        "app/_not-found/page": {
+          "moduleId": 39990,
+          "async": false,
+          "exportedName": "deleteFile",
+          "filename": "lib/file.ts"
+        },
+        "app/page": {
+          "moduleId": 9415,
+          "async": false,
+          "exportedName": "deleteFile",
+          "filename": "lib/file.ts"
+        }
+      },
+      "filename": "lib/file.ts",
+      "exportedName": "deleteFile"
+    },
+    "00a6029484e64f26793256eafc8ebbbda36e71f4d0": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "default",
+          "filename": "lib/file.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "default",
+          "filename": "lib/file.ts"
+        },
+        "app/(file)/file/page": {
+          "moduleId": 70718,
+          "async": false,
+          "exportedName": "default",
+          "filename": "lib/file.ts"
+        },
+        "app/_not-found/page": {
+          "moduleId": 39990,
+          "async": false,
+          "exportedName": "default",
+          "filename": "lib/file.ts"
+        },
+        "app/page": {
+          "moduleId": 9415,
+          "async": false,
+          "exportedName": "default",
+          "filename": "lib/file.ts"
+        }
+      },
+      "filename": "lib/file.ts",
+      "exportedName": "default"
+    },
+    "005c58ac9c9c2cfa3c3355edc35e64d82d9ab75bcc": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "default",
+          "filename": "lib/session.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "default",
+          "filename": "lib/session.ts"
+        }
+      },
+      "filename": "lib/session.ts",
+      "exportedName": "default"
+    },
+    "409fa77b0206f616cccfbc3de6ebcad825a8eff730": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "deleteSession",
+          "filename": "lib/session.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "deleteSession",
+          "filename": "lib/session.ts"
+        }
+      },
+      "filename": "lib/session.ts",
+      "exportedName": "deleteSession"
+    },
+    "6026cf5163ab331bfddb8581a33a9ae006fa95f2e2": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "updateTitle",
+          "filename": "lib/session.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "updateTitle",
+          "filename": "lib/session.ts"
+        }
+      },
+      "filename": "lib/session.ts",
+      "exportedName": "updateTitle"
+    },
+    "605266b63e7acddb0fb99d6207c7f8178bfcdf72f6": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "addMessageToQueue",
+          "filename": "app/(chat)/chat/actions.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "addMessageToQueue",
+          "filename": "app/(chat)/chat/actions.ts"
+        }
+      },
+      "filename": "app/(chat)/chat/actions.ts",
+      "exportedName": "addMessageToQueue"
+    },
+    "40cbf1dd6bebcb83becdf5e8f434d5f4ea01284b60": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "checkJobStatus",
+          "filename": "app/(chat)/chat/actions.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "checkJobStatus",
+          "filename": "app/(chat)/chat/actions.ts"
+        }
+      },
+      "filename": "app/(chat)/chat/actions.ts",
+      "exportedName": "checkJobStatus"
+    },
+    "4045da241aa9935b99bfd276ccd0b915ae5aa249ef": {
+      "workers": {
+        "app/(chat)/chat/[sessionId]/page": {
+          "moduleId": 39058,
+          "async": false,
+          "exportedName": "getHistoryMessage",
+          "filename": "lib/chat.ts"
+        },
+        "app/(chat)/chat/page": {
+          "moduleId": 48473,
+          "async": false,
+          "exportedName": "getHistoryMessage",
+          "filename": "lib/chat.ts"
+        }
+      },
+      "filename": "lib/chat.ts",
+      "exportedName": "getHistoryMessage"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "cOwFFULw+Z9BNlI9KnVlbKGsV7Fi3W9tpf6EAGvF0fw="
+}
