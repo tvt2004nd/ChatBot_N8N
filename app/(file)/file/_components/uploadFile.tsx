@@ -1,6 +1,7 @@
 "use client";
 import { useFileContext } from "@/app/FileContext";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function UploadFile() {
   const { uploadAndAddFile } = useFileContext();
@@ -19,7 +20,7 @@ export default function UploadFile() {
       console.log("Upload thành công:", file.name);
     } catch (err) {
       console.error("Upload lỗi:", err);
-      alert(err || "Lỗi upload file");
+      toast.error(err instanceof Error ? err.message : "Lỗi upload file");
     } finally {
       setIsUploading(false);
       e.target.value = "";

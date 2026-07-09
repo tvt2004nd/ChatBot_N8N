@@ -1,22 +1,20 @@
 {
-  "pages": {
-    "/_app": []
-  },
-  "devFiles": [],
   "polyfillFiles": [
-    "static/chunks/0cz1d0mv5g_q7.js"
+    "static/chunks/polyfills-42372ed130431b0a.js"
   ],
+  "devFiles": [],
   "lowPriorityFiles": [
-    "static/J7Ty-ogw0q2oEsACR3Cmz/_buildManifest.js",
-    "static/J7Ty-ogw0q2oEsACR3Cmz/_ssgManifest.js",
-    "static/J7Ty-ogw0q2oEsACR3Cmz/_clientMiddlewareManifest.js"
+    "static/wTfsO7nqH1uB7t7ruahBO/_buildManifest.js",
+    "static/wTfsO7nqH1uB7t7ruahBO/_ssgManifest.js"
   ],
   "rootMainFiles": [
-    "static/chunks/1ad1rkmat322z.js",
-    "static/chunks/0245a4ypel7xx.js",
-    "static/chunks/3rxl-jt3pdxgx.js",
-    "static/chunks/0pvx_znr4qhq6.js",
-    "static/chunks/27jktro2p5rq9.js",
-    "static/chunks/turbopack-0s4esvv0nnng-.js"
-  ]
+    "static/chunks/webpack-fd8a991388ea60dd.js",
+    "static/chunks/4bd1b696-215e5051988c3dde.js",
+    "static/chunks/413-09f4e8518166a5ed.js",
+    "static/chunks/main-app-49f3e8cca2ad47c5.js"
+  ],
+  "rootMainFilesTree": {},
+  "pages": {
+    "/_app": []
+  }
 }

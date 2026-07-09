@@ -1,6 +1,7 @@
 "use client";
 import { useFileContext } from "@/app/FileContext";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ListFile() {
   const { files, isLoading, loadFiles, deleteAndRemoveFile } = useFileContext();
@@ -17,7 +18,7 @@ export default function ListFile() {
     try {
       await deleteAndRemoveFile(fileId);
     } catch (err) {
-      alert(err || "Lỗi xóa file");
+      toast.error(err instanceof Error ? err.message : "Lỗi xóa file");
     } finally {
       setDeletingId(null);
     }
@@ -42,7 +43,8 @@ export default function ListFile() {
           </a>
           <button
             onClick={() => handleDelete(file.file_id, file.file_name)}
-            disabled={deletingId === file.file_id}
+            disabled={!!file.isUploading || deletingId === file.file_id}
+            title={file.isUploading ? "Đang upload, vui lòng chờ..." : "Xóa file"}
             style={{
               marginLeft: 8,
               color: "#ef4444",
@@ -50,11 +52,19 @@ export default function ListFile() {
               border: "1px solid #ef4444",
               borderRadius: 4,
               padding: "4px 10px",
-              cursor: deletingId === file.file_id ? "not-allowed" : "pointer",
-              opacity: deletingId === file.file_id ? 0.5 : 1,
+              cursor:
+                file.isUploading || deletingId === file.file_id
+                  ? "not-allowed"
+                  : "pointer",
+              opacity:
+                file.isUploading || deletingId === file.file_id ? 0.5 : 1,
             }}
           >
-            {deletingId === file.file_id ? "Đang xóa..." : "Xóa"}
+            {file.isUploading
+              ? "Đang upload..."
+              : deletingId === file.file_id
+                ? "Đang xóa..."
+                : "Xóa"}
           </button>
         </div>
       ))}

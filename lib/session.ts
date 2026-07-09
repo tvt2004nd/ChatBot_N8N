@@ -49,7 +49,11 @@ export async function updateTitle(
     const res = await axios.put(url, { sessionId, title });
     return res.data;
   } catch (err) {
-    throw err;
+    console.error("Lỗi updateTitle:", err);
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || err.message || "Lỗi khi cập nhật tiêu đề");
+    }
+    throw new Error(err instanceof Error ? err.message : "Lỗi không xác định");
   }
 }
 export async function deleteSession(sessionId: string): Promise<sessionItem> {
@@ -61,6 +65,10 @@ export async function deleteSession(sessionId: string): Promise<sessionItem> {
     const res = await axios.delete(url, { data: { sessionId } });
     return res.data;
   } catch (err) {
-    throw err;
+    console.error("Lỗi deleteSession:", err);
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || err.message || "Lỗi khi xóa session");
+    }
+    throw new Error(err instanceof Error ? err.message : "Lỗi không xác định");
   }
 }

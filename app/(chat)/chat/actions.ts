@@ -7,25 +7,41 @@ export async function addMessageToQueue(chatInput: string, sessionId?: string) {
   const url = process.env.N8N_WEBHOOK_URL;
   if (!url) throw new Error("Thiếu N8N_WEBHOOK_URL trong .env");
 
-  const res = await axios.post(url, {
-    chatInput,
-    sessionId,
-  });
-  console.log("Webhook response:", res.data);
+  try {
+    const res = await axios.post(url, {
+      chatInput,
+      sessionId,
+    });
+    console.log("Webhook response:", res.data);
 
-  return {
-    jobId: res.data.jobId,
-    sessionId: res.data.sessionId,
-  };
+    return {
+      jobId: res.data.jobId,
+      sessionId: res.data.sessionId,
+    };
+  } catch (err) {
+    console.error("Lỗi addMessageToQueue:", err);
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || err.message || "Lỗi khi gửi tin nhắn");
+    }
+    throw new Error(err instanceof Error ? err.message : "Lỗi không xác định");
+  }
 }
 
 export async function checkJobStatus(jobId: string) {
   const url = process.env.N8N_STATUS_URL;
   if (!url) throw new Error("Thiếu N8N_STATUS_URL trong .env");
 
-  const res = await axios.get(url, { params: { jobId: jobId } });
-  console.log(res.data);
-  console.log(Array.isArray(res.data));
+  try {
+    const res = await axios.get(url, { params: { jobId: jobId } });
+    console.log(res.data);
+    console.log(Array.isArray(res.data));
 
-  return res.data;
+    return res.data;
+  } catch (err) {
+    console.error("Lỗi checkJobStatus:", err);
+    if (axios.isAxiosError(err)) {
+      throw new Error(err.response?.data?.message || err.message || "Lỗi khi kiểm tra trạng thái tin nhắn");
+    }
+    throw new Error(err instanceof Error ? err.message : "Lỗi không xác định");
+  }
 }
