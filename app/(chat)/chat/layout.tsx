@@ -3,8 +3,10 @@
 import { useState } from "react";
 import ListChat from "./_components/ListChat";
 import FilePanel from "./_components/FilePanel";
+import UserProfile from "./_components/UserProfile";
 import style from "../../../style/layout.module.css";
 import { BsList, BsFolder } from "react-icons/bs";
+import { FcGoogle } from "react-icons/fc";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isLeftOpen, setIsLeftOpen] = useState(false);
@@ -25,6 +27,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <nav className={`${style.sidebar} ${isLeftOpen ? style.sidebarOpen : ""}`}>
         <div className={style.sidebarTitle}>Lịch sử Chat</div>
         <ListChat />
+        
+        <div className={style.loginContainer}>
+          <UserProfile />
+        </div>
       </nav>
       
       <main className={style.mainContent}>

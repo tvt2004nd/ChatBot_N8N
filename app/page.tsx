@@ -1,8 +1,14 @@
 import Link from "next/link";
 import { BsChatDotsFill } from "react-icons/bs";
 import style from "@/style/home.module.css";
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  const user = await getCurrentUser();
+  if (!user) {
+    redirect("/login");
+  }
   return (
     <main className={style.container}>
       <div className={style.content}>

@@ -1,0 +1,266 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9fafb;
+  padding: 16px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  .container {
+    background-color: #111827;
+  }
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+@media (prefers-color-scheme: dark) {
+  .card {
+    background-color: #1f2937;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-top: 0;
+  margin-bottom: 24px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .title {
+    color: #f9fafb;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  .label {
+    color: #d1d5db;
+  }
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: #fcfcfc;
+  color: #111827;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.inputPassword {
+  padding-right: 40px;
+}
+
+.input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+  background-color: #fff;
+}
+
+.inputError {
+  border-color: #ef4444 !important;
+  background-color: #fef2f2;
+}
+
+.inputError:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  .input {
+    background-color: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  .input:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+    background-color: #1f2937;
+  }
+  .inputError {
+    border-color: #f87171 !important;
+    background-color: rgba(239, 68, 68, 0.05);
+  }
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 12px;
+  color: #6b7280;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s;
+}
+
+.eyeIcon:hover {
+  color: #374151;
+}
+
+@media (prefers-color-scheme: dark) {
+  .eyeIcon {
+    color: #9ca3af;
+  }
+  .eyeIcon:hover {
+    color: #d1d5db;
+  }
+}
+
+.errorMessage {
+  font-size: 0.8rem;
+  color: #ef4444;
+  margin-top: 2px;
+  animation: slideDown 0.2s ease-out forwards;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-color-scheme: dark) {
+  .errorMessage {
+    color: #f87171;
+  }
+}
+
+.submitBtn {
+  margin-top: 12px;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2563eb;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.submitBtn:hover {
+  background-color: #1d4ed8;
+}
+
+.submitBtn:active {
+  transform: scale(0.98);
+}
+
+@media (prefers-color-scheme: dark) {
+  .submitBtn {
+    background-color: #3b82f6;
+  }
+  .submitBtn:hover {
+    background-color: #2563eb;
+  }
+}
+
+.footer {
+  margin-top: 24px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 6px;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+@media (prefers-color-scheme: dark) {
+  .footer {
+    color: #9ca3af;
+  }
+  .link {
+    color: #60a5fa;
+  }
+  .link:hover {
+    color: #3b82f6;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .card {
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+
+  .title {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .card {
+    padding: 22px 14px;
+    border-radius: 10px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .input {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+
+  .submitBtn {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+
+  .footer {
+    font-size: 0.82rem;
+  }
+}

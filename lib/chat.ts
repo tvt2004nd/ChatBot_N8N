@@ -3,6 +3,7 @@ import axios from "axios";
 axios.defaults.headers.common["User-Agent"] =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
 import { NextRequest, NextResponse } from "next/server";
+import { getCurrentUser } from "@/lib/auth";
 
 export type HistoryItem = {
   id: number;
@@ -20,9 +21,12 @@ export async function getHistoryMessage(
     throw new Error("Thiếu N8N_HISTORY_CHAT_URL trong .env");
   }
 
+  const user = await getCurrentUser();
+  if (!user) throw new Error("Chưa đăng nhập");
+
   try {
     const res = await axios.get(url, {
-      params: { sessionId },
+      params: { sessionId, userId: user.userId, role: user.role },
     });
 
     let data = res.data;

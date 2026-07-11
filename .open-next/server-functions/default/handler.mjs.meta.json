@@ -4130,7 +4130,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/chunks/266.js": {
-      "bytes": 26766,
+      "bytes": 25873,
       "imports": [],
       "format": "cjs"
     },
@@ -4600,7 +4600,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/(file)/file/page.js": {
-      "bytes": 36643,
+      "bytes": 35750,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -4912,7 +4912,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/_not-found/page.js": {
-      "bytes": 31974,
+      "bytes": 31081,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -5068,7 +5068,7 @@
       "format": "cjs"
     },
     ".open-next/server-functions/default/.next/server/app/page.js": {
-      "bytes": 37328,
+      "bytes": 36435,
       "imports": [
         {
           "path": ".open-next/server-functions/default/node_modules/next/dist/shared/lib/router/utils/app-paths.js",
@@ -8132,7 +8132,7 @@
           "bytesInOutput": 7868
         },
         ".open-next/server-functions/default/.next/server/chunks/266.js": {
-          "bytesInOutput": 27789
+          "bytesInOutput": 26794
         },
         ".open-next/server-functions/default/.next/server/chunks/319.js": {
           "bytesInOutput": 382505
@@ -8162,16 +8162,16 @@
           "bytesInOutput": 69329
         },
         ".open-next/server-functions/default/.next/server/app/(file)/file/page.js": {
-          "bytesInOutput": 37298
+          "bytesInOutput": 36303
         },
         ".open-next/server-functions/default/.next/server/app/(chat)/chat/page.js": {
           "bytesInOutput": 24313
         },
         ".open-next/server-functions/default/.next/server/app/_not-found/page.js": {
-          "bytesInOutput": 32428
+          "bytesInOutput": 31433
         },
         ".open-next/server-functions/default/.next/server/app/page.js": {
-          "bytesInOutput": 38061
+          "bytesInOutput": 37066
         },
         ".open-next/server-functions/default/node_modules/next/dist/server/require.js": {
           "bytesInOutput": 3430
@@ -8324,7 +8324,7 @@
           "bytesInOutput": 58898
         }
       },
-      "bytes": 3341235
+      "bytes": 3337255
     }
   }
 }

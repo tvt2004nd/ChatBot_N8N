@@ -21,6 +21,7 @@ export const allowType = [
 ];
 
 type FileContextType = {
+  role: string;
   files: FileItem[];
   setFiles: React.Dispatch<React.SetStateAction<FileItem[]>>;
   isLoading: boolean;
@@ -31,7 +32,7 @@ type FileContextType = {
 
 export const FileContext = createContext<FileContextType | null>(null);
 
-export function FileProvider({ children }: { children: React.ReactNode }) {
+export function FileProvider({ children, role = "user" }: { children: React.ReactNode, role?: string }) {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -84,61 +85,16 @@ export function FileProvider({ children }: { children: React.ReactNode }) {
           throw new Error(result.error);
         }
 
-        // N8N thường trả về mảng hoặc bọc trong object
-        if (Array.isArray(result) && result.length > 0) result = result[0];
-        if (result && result.data && Array.isArray(result.data)) result = result.data[0];
-        else if (result && result.data) result = result.data;
-
-        // Debug: log response shape để biết field name thực tế
-        console.log("[uploadFile] result shape:", JSON.stringify(result).slice(0, 300));
-
-        // Lấy file_id thật — thử các tên field phổ biến mà N8N có thể trả về
-        const realFileId: string | undefined =
-          result?.file_id ?? result?.id ?? result?.fileId;
-
-        if (!realFileId || typeof realFileId !== "string" || realFileId.trim() === "") {
-          // Không có file_id thật → rollback, không để tempId mồ côi trong state
-          console.error(
-            "[uploadFile] Không tìm thấy file_id hợp lệ trong response. Toàn bộ result:",
-            result,
-          );
-          setFiles((prev) => prev.filter((f) => f.file_id !== tempId));
-          toast.error("Upload thành công nhưng server không trả về file_id.");
-          return;
-        }
-
-        // Cập nhật tempId → realFileId trong state
-        setFiles((prev) =>
-          prev.map((f) => {
-            if (f.file_id === tempId) {
-              return {
-                file_id: realFileId,
-                file_name: result.file_name ?? file.name,
-                modified_time: result.modified_time
-                  ? new Date(result.modified_time)
-                  : new Date(),
-                source_url: result.source_url ?? "",
-                isUploading: false,
-              };
-            }
-            return f;
-          }),
-        );
-
-        console.log(`[uploadFile] Đã cập nhật tempId "${tempId}" → realId "${realFileId}"`);
         toast.success("Upload file thành công!");
+        
+        // Render lại danh sách từ server
+        await loadFiles();
       } catch (err) {
-        // Xóa tempId khỏi state (không để lại file ảo mồ côi)
+        // Xóa tempId khỏi state
         setFiles((prev) => prev.filter((f) => f.file_id !== tempId));
 
-        console.warn(
-          "[uploadFile] Lỗi upload — re-sync danh sách để kiểm tra file có lên Drive không:",
-          err,
-        );
+        console.warn("[uploadFile] Lỗi upload:", err);
         toast.error(err instanceof Error ? err.message : "Lỗi khi upload file");
-        loadFiles().catch((syncErr) =>
-          console.error("[uploadFile] Re-sync sau lỗi thất bại:", syncErr),
-        );
       }
     },
     [files, loadFiles],
@@ -161,6 +117,7 @@ export function FileProvider({ children }: { children: React.ReactNode }) {
   return (
     <FileContext.Provider
       value={{
+        role,
         files,
         setFiles,
         isLoading,

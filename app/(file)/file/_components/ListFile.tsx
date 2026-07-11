@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function ListFile() {
-  const { files, isLoading, loadFiles, deleteAndRemoveFile } = useFileContext();
+  const { files, isLoading, loadFiles, deleteAndRemoveFile, role } = useFileContext();
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -41,31 +41,33 @@ export default function ListFile() {
           <a href={file.source_url} target="_blank">
             Xem file
           </a>
-          <button
-            onClick={() => handleDelete(file.file_id, file.file_name)}
-            disabled={!!file.isUploading || deletingId === file.file_id}
-            title={file.isUploading ? "Đang upload, vui lòng chờ..." : "Xóa file"}
-            style={{
-              marginLeft: 8,
-              color: "#ef4444",
-              background: "transparent",
-              border: "1px solid #ef4444",
-              borderRadius: 4,
-              padding: "4px 10px",
-              cursor:
-                file.isUploading || deletingId === file.file_id
-                  ? "not-allowed"
-                  : "pointer",
-              opacity:
-                file.isUploading || deletingId === file.file_id ? 0.5 : 1,
-            }}
-          >
-            {file.isUploading
-              ? "Đang upload..."
-              : deletingId === file.file_id
-                ? "Đang xóa..."
-                : "Xóa"}
-          </button>
+          {role === "admin" && (
+            <button
+              onClick={() => handleDelete(file.file_id, file.file_name)}
+              disabled={!!file.isUploading || deletingId === file.file_id}
+              title={file.isUploading ? "Đang upload, vui lòng chờ..." : "Xóa file"}
+              style={{
+                marginLeft: 8,
+                color: "#ef4444",
+                background: "transparent",
+                border: "1px solid #ef4444",
+                borderRadius: 4,
+                padding: "4px 10px",
+                cursor:
+                  file.isUploading || deletingId === file.file_id
+                    ? "not-allowed"
+                    : "pointer",
+                opacity:
+                  file.isUploading || deletingId === file.file_id ? 0.5 : 1,
+              }}
+            >
+              {file.isUploading
+                ? "Đang upload..."
+                : deletingId === file.file_id
+                  ? "Đang xóa..."
+                  : "Xóa"}
+            </button>
+          )}
         </div>
       ))}
     </div>

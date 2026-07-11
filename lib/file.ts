@@ -1,5 +1,6 @@
 "use server";
 import axios from "axios";
+import { getCurrentUser } from "@/lib/auth";
 axios.defaults.headers.common["User-Agent"] =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
 
@@ -13,12 +14,15 @@ export type FileItem = {
 };
 
 export default async function getAllFile(): Promise<FileItem[]> {
+  const user = await getCurrentUser();
+  if (!user) throw new Error("Chưa đăng nhập");
+
   const url = process.env.N8N_FILE;
   if (!url) {
     throw new Error("không tìm thấy url");
   }
   try {
-    const res = await axios.get(url);
+    const res = await axios.get(url, { params: { userId: user.userId, role: user.role } });
     let raw = res.data;
 
     // Log để debug — xem N8N thực sự trả về gì
@@ -61,6 +65,9 @@ export default async function getAllFile(): Promise<FileItem[]> {
   }
 }
 export async function uploadFile(formData: FormData) {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "admin") return { error: "Bạn không có quyền upload file" };
+
   const url = process.env.N8N_FILE;
   if (!url) {
     throw new Error("Không tìm thấy url");
@@ -79,6 +86,9 @@ export async function uploadFile(formData: FormData) {
 }
 
 export async function deleteFile(fileId: string) {
+  const user = await getCurrentUser();
+  if (!user || user.role !== "admin") return { error: "Bạn không có quyền xóa file" };
+
   const url = process.env.N8N_FILE;
   if (!url) {
     throw new Error("Không tìm thấy url");

@@ -17,7 +17,7 @@ import {
 } from "react-icons/bs";
 
 export default function FilePanel() {
-  const { files, isLoading, loadFiles, uploadAndAddFile, deleteAndRemoveFile } =
+  const { files, isLoading, loadFiles, uploadAndAddFile, deleteAndRemoveFile, role } =
     useFileContext();
   const [showFiles, setShowFiles] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
@@ -118,31 +118,35 @@ export default function FilePanel() {
 
         {showFiles && (
           <div className={style.fileSectionBody}>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleUpload}
-              className={style.fileInputHidden}
-            />
-            <button
-              className={style.uploadBtn}
-              onClick={() => fileInputRef.current?.click()}
-              disabled={isUploading}
-            >
-              {isUploading ? (
-                <>
-                  <span className={style.uploadSpinner}></span>
-                  <span>Đang tải...</span>
-                </>
-              ) : (
-                <>
-                  <span className={style.uploadIcon}>
-                    <BsCloudUpload />
-                  </span>
-                  <span>Tải file lên</span>
-                </>
-              )}
-            </button>
+            {role === "admin" && (
+              <>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleUpload}
+                  className={style.fileInputHidden}
+                />
+                <button
+                  className={style.uploadBtn}
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                >
+                  {isUploading ? (
+                    <>
+                      <span className={style.uploadSpinner}></span>
+                      <span>Đang tải...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className={style.uploadIcon}>
+                        <BsCloudUpload />
+                      </span>
+                      <span>Tải file lên</span>
+                    </>
+                  )}
+                </button>
+              </>
+            )}
 
             {isLoading ? (
               <div className={style.filePanelMsg}>Đang tải danh sách...</div>
@@ -193,27 +197,29 @@ export default function FilePanel() {
                             >
                               <BsBoxArrowUpRight />
                             </a>
-                            <button
-                              className={`${style.actionBtn} ${style.actionBtnDelete}`}
-                              title="Xóa file"
-                              disabled={deletingId === file.file_id}
-                              onClick={() =>
-                                handleDelete(file.file_id, file.file_name)
-                              }
-                            >
-                              {deletingId === file.file_id ? (
-                                <span
-                                  className={style.uploadSpinner}
-                                  style={{
-                                    width: 14,
-                                    height: 14,
-                                    borderWidth: "1.5px",
-                                  }}
-                                ></span>
-                              ) : (
-                                <BsTrash />
-                              )}
-                            </button>
+                            {role === "admin" && (
+                              <button
+                                className={`${style.actionBtn} ${style.actionBtnDelete}`}
+                                title="Xóa file"
+                                disabled={deletingId === file.file_id}
+                                onClick={() =>
+                                  handleDelete(file.file_id, file.file_name)
+                                }
+                              >
+                                {deletingId === file.file_id ? (
+                                  <span
+                                    className={style.uploadSpinner}
+                                    style={{
+                                      width: 14,
+                                      height: 14,
+                                      borderWidth: "1.5px",
+                                    }}
+                                  ></span>
+                                ) : (
+                                  <BsTrash />
+                                )}
+                              </button>
+                            )}
                           </>
                         )}
                       </div>
