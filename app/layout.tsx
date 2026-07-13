@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   description: "Đây là trang chủ",
 };
 
+export const maxDuration = 300; // Cho phép action chạy tối đa 5 phút (nếu platform hỗ trợ)
+
 export default async function Layout({
   children,
 }: Readonly<{

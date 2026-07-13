@@ -69,6 +69,12 @@
       "namedRegex": "^/file(?:/)?$"
     },
     {
+      "page": "/forgot-password",
+      "regex": "^/forgot\\-password(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/forgot\\-password(?:/)?$"
+    },
+    {
       "page": "/login",
       "regex": "^/login(?:/)?$",
       "routeKeys": {},
@@ -79,6 +85,12 @@
       "regex": "^/register(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/register(?:/)?$"
+    },
+    {
+      "page": "/verify-otp",
+      "regex": "^/verify\\-otp(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/verify\\-otp(?:/)?$"
     }
   ],
   "dataRoutes": [],

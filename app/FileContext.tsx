@@ -5,10 +5,11 @@ import React, {
   useState,
   useCallback,
   ReactNode,
+  useEffect,
 } from "react";
 import {
   FileItem,
-  uploadFile as uploadFileApi,
+  uploadFileToDrive,
   deleteFile as deleteFileApi,
 } from "@/lib/file";
 import getAllFile from "@/lib/file";
@@ -32,22 +33,47 @@ type FileContextType = {
 
 export const FileContext = createContext<FileContextType | null>(null);
 
-export function FileProvider({ children, role = "user" }: { children: React.ReactNode, role?: string }) {
+export function FileProvider({
+  children,
+  role = "user",
+}: {
+  children: React.ReactNode;
+  role?: string;
+}) {
   const [files, setFiles] = useState<FileItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const updateFilesFromData = useCallback((data: FileItem[]) => {
+    setFiles((prev) => {
+      const completedFiles = prev.filter(
+        (f) => f.isProcessing && data.some((d) => d.file_id === f.file_id),
+      );
+
+      completedFiles.forEach((file) => {
+        toast.success(`File "${file.file_name}" đã xử lý xong`);
+      });
+
+      const processingFiles = prev.filter(
+        (f) => f.isProcessing && !data.some((d) => d.file_id === f.file_id),
+      );
+      return [...processingFiles, ...data];
+    });
+  }, []);
 
   const loadFiles = useCallback(async () => {
     setIsLoading(true);
     try {
       const data = await getAllFile();
-      setFiles(data);
+      updateFilesFromData(data);
     } catch (err) {
       console.error("Lỗi tải danh sách file:", err);
-      toast.error(err instanceof Error ? err.message : "Lỗi tải danh sách file");
+      toast.error(
+        err instanceof Error ? err.message : "Lỗi tải danh sách file",
+      );
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [updateFilesFromData]);
 
   const uploadAndAddFile = useCallback(
     async (file: File) => {
@@ -72,25 +98,36 @@ export function FileProvider({ children, role = "user" }: { children: React.Reac
         source_url: "",
         isUploading: true,
       };
-      
+
       // Đưa file ảo vào danh sách ngay lập tức
       setFiles((prev) => [tempFile, ...prev]);
 
       try {
         const formData = new FormData();
-        formData.append("data", file);
-        let result = await uploadFileApi(formData);
+        formData.append("file", file);
+        const result = await uploadFileToDrive(formData);
 
-        if (result && typeof result === "object" && "error" in result) {
-          throw new Error(result.error);
-        }
+        // Upload xong lên Drive, n8n bắt đầu xử lý. Đổi trạng thái UI sang Đang xử lý.
+        setFiles((prev) =>
+          prev.map((f) =>
+            f.file_id === tempId
+              ? {
+                  ...f,
+                  file_id: result.fileId, // Cập nhật ID thật từ Drive
+                  source_url: result.fileUrl,
+                  isUploading: false,
+                  isProcessing: true,
+                }
+              : f,
+          ),
+        );
 
-        toast.success("Upload file thành công!");
-        
-        // Render lại danh sách từ server
+        toast.success("Tải file thành công! Hệ thống đang xử lý dữ liệu...");
+
+        // Render lại danh sách từ server (có thể chưa có file ngay lập tức vì n8n đang chạy ngầm)
         await loadFiles();
       } catch (err) {
-        // Xóa tempId khỏi state
+        // Xóa tempId khỏi state nếu lỗi thật
         setFiles((prev) => prev.filter((f) => f.file_id !== tempId));
 
         console.warn("[uploadFile] Lỗi upload:", err);
@@ -113,6 +150,28 @@ export function FileProvider({ children, role = "user" }: { children: React.Reac
       toast.error(err instanceof Error ? err.message : "Lỗi khi xóa file");
     }
   }, []);
+
+  // Polling ngầm để cập nhật khi file đang xử lý xong
+  useEffect(() => {
+    const hasProcessingFiles = files.some((f) => f.isProcessing);
+    if (!hasProcessingFiles) return;
+
+    const intervalId = setInterval(async () => {
+      try {
+        const data = await getAllFile();
+        setFiles((prev) => {
+          const processingFiles = prev.filter(
+            (f) => f.isProcessing && !data.some((d) => d.file_id === f.file_id),
+          );
+          return [...processingFiles, ...data];
+        });
+      } catch (err) {
+        console.warn("Lỗi poll danh sách file ngầm:", err);
+      }
+    }, 5000); // Poll mỗi 5 giây
+
+    return () => clearInterval(intervalId);
+  }, [files.some((f) => f.isProcessing)]);
 
   return (
     <FileContext.Provider

@@ -27,7 +27,7 @@ export default function UpdateProfileModal({ onClose }: Props) {
       try {
         const data = await getMyProfile();
         // N8n có thể trả về 'name' hoặc 'full_name' tùy thuộc database map.
-        setFullName(data.full_name || data.name || "");
+        setFullName(data.full_name || "");
         setPhone(data.phone || "");
       } catch (error) {
         if (error instanceof Error) {
@@ -74,9 +74,11 @@ export default function UpdateProfileModal({ onClose }: Props) {
     <div className={style.modalOverlay}>
       <div className={style.modalBox} onClick={(e) => e.stopPropagation()}>
         <h2 className={style.modalTitle}>Thông tin cá nhân</h2>
-        
+
         {isFetching ? (
-          <div style={{ textAlign: "center", padding: "20px", color: "#888" }}>Đang tải...</div>
+          <div style={{ textAlign: "center", padding: "20px", color: "#888" }}>
+            Đang tải...
+          </div>
         ) : (
           <form
             onSubmit={handleSubmit}

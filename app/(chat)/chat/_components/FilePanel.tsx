@@ -17,8 +17,14 @@ import {
 } from "react-icons/bs";
 
 export default function FilePanel() {
-  const { files, isLoading, loadFiles, uploadAndAddFile, deleteAndRemoveFile, role } =
-    useFileContext();
+  const {
+    files,
+    isLoading,
+    loadFiles,
+    uploadAndAddFile,
+    deleteAndRemoveFile,
+    role,
+  } = useFileContext();
   const [showFiles, setShowFiles] = useState(true);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadingFileName, setUploadingFileName] = useState("");
@@ -83,6 +89,9 @@ export default function FilePanel() {
                 <span className={style.uploadOverlayTitle}>
                   Đang xử lý tài liệu...
                 </span>
+                <span className={style.uploadOverlaySubtitle}>
+                  Vui lòng chờ trong giây lát, hệ thống đang xử lý file của bạn.
+                </span>
                 {uploadingFileName && (
                   <span
                     className={style.uploadOverlayFileName}
@@ -134,7 +143,14 @@ export default function FilePanel() {
                   {isUploading ? (
                     <>
                       <span className={style.uploadSpinner}></span>
-                      <span>Đang tải...</span>
+                      <span
+                        className={style.uploadingButtonText}
+                        title={uploadingFileName}
+                      >
+                        {uploadingFileName
+                          ? `Đang tải ${uploadingFileName}`
+                          : "Đang tải..."}
+                      </span>
                     </>
                   ) : (
                     <>
@@ -157,7 +173,14 @@ export default function FilePanel() {
                 {files.map((file) => {
                   const { icon, colorClass } = getFileIconInfo(file.file_name);
                   return (
-                    <li key={file.file_id} className={style.fileItem}>
+                    <li
+                      key={file.file_id}
+                      className={`${style.fileItem} ${
+                        file.isUploading || file.isProcessing
+                          ? style.fileItemProcessing
+                          : ""
+                      }`}
+                    >
                       <div className={`${style.fileIconWrapper} ${colorClass}`}>
                         {icon}
                       </div>
@@ -175,16 +198,22 @@ export default function FilePanel() {
                             },
                           )}
                         </span>
+                        {(file.isUploading || file.isProcessing) && (
+                          <span className={style.fileStatus}>
+                            {file.isUploading
+                              ? "Đang tải lên..."
+                              : "Đang xử lý..."}
+                          </span>
+                        )}
                       </div>
                       <div className={style.fileActions}>
-                        {file.isUploading ? (
+                        {file.isUploading || file.isProcessing ? (
                           <span
                             className={style.uploadSpinner}
                             style={{
                               width: 14,
                               height: 14,
                               borderWidth: "1.5px",
-                              marginRight: 8,
                             }}
                           ></span>
                         ) : (
