@@ -128,6 +128,12 @@ export default function Login() {
             )}
           </div>
 
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+            <Link href="/forgot-password" className={style.link} style={{ fontSize: '0.9rem' }}>
+              Quên mật khẩu?
+            </Link>
+          </div>
+
           <button type="submit" className={style.button}>
             Đăng nhập
           </button>

@@ -2,7 +2,7 @@
 import getAllSession, { deleteSession, updateTitle } from "@/lib/session";
 
 import Link from "next/link";
-import { sessionItem } from "@/lib/session";
+import { SessionItem } from "@/lib/session";
 import style from "../../../../style/layout.module.css";
 import { BsClockHistory } from "react-icons/bs";
 import { useEffect, useState } from "react";
@@ -10,10 +10,10 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 export default function ListChat() {
-  const [listSession, setListSession] = useState<sessionItem[]>([]);
+  const [listSession, setListSession] = useState<SessionItem[]>([]);
   const [openMenuId, setOpenMenuId] = useState<string | number | null>(null);
   const [title, setTitle] = useState<string>("");
-  const [renameSession, setRenameSession] = useState<sessionItem | null>(null);
+  const [renameSession, setRenameSession] = useState<SessionItem | null>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function ListChat() {
     setOpenMenuId(openMenuId === id ? null : id);
   };
 
-  const handleOpenRename = (e: React.MouseEvent, session: sessionItem) => {
+  const handleOpenRename = (e: React.MouseEvent, session: SessionItem) => {
     e.preventDefault();
     setRenameSession(session);
     setOpenMenuId(null);

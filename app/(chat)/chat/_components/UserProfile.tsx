@@ -4,10 +4,17 @@ import { getCurrentUser, LogoutUser } from "@/lib/auth";
 import style from "../../../../style/layout.module.css";
 import { useRouter } from "next/navigation";
 import { BsPersonCircle } from "react-icons/bs";
+import UserManagementModal from "@/app/(user)/user/_components/UserManagementModal";
+import ChangePasswordModal from "./ChangePasswordModal";
+import UpdateProfileModal from "./UpdateProfileModal";
 
 export default function UserProfile() {
   const [user, setUser] = useState<{ email: string; role: string; userId: number } | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [showManageUsers, setShowManageUsers] = useState(false);
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
+
   const router = useRouter();
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -32,15 +39,11 @@ export default function UserProfile() {
     router.push("/login");
   };
 
-  const handleEditProfile = () => {
-    alert("Chức năng chỉnh sửa thông tin cá nhân đang được phát triển!");
-    setMenuOpen(false);
-  };
-
   if (!user) return null;
 
   return (
-    <div className={style.userProfileContainer} ref={menuRef}>
+    <>
+      <div className={style.userProfileContainer} ref={menuRef}>
       <div className={style.userProfileCard} onClick={() => setMenuOpen(!menuOpen)}>
         <BsPersonCircle className={style.userProfileIcon} />
         <div className={style.userInfo}>
@@ -51,8 +54,16 @@ export default function UserProfile() {
       
       {menuOpen && (
         <div className={style.userProfileMenu}>
-          <button className={style.userProfileMenuItem} onClick={handleEditProfile}>
+          {user.role === "admin" && (
+            <button className={style.userProfileMenuItem} onClick={() => { setShowManageUsers(true); setMenuOpen(false); }}>
+              Quản lý người dùng
+            </button>
+          )}
+          <button className={style.userProfileMenuItem} onClick={() => { setShowUpdateProfile(true); setMenuOpen(false); }}>
             Chỉnh sửa thông tin cá nhân
+          </button>
+          <button className={style.userProfileMenuItem} onClick={() => { setShowChangePassword(true); setMenuOpen(false); }}>
+            Đổi mật khẩu
           </button>
           <button className={`${style.userProfileMenuItem} ${style.logoutText}`} onClick={handleLogout}>
             Đăng xuất
@@ -60,5 +71,9 @@ export default function UserProfile() {
         </div>
       )}
     </div>
+    {showManageUsers && <UserManagementModal onClose={() => setShowManageUsers(false)} />}
+    {showUpdateProfile && <UpdateProfileModal onClose={() => setShowUpdateProfile(false)} />}
+    {showChangePassword && <ChangePasswordModal onClose={() => setShowChangePassword(false)} />}
+    </>
   );
 }

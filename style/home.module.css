@@ -97,3 +97,19 @@
     background-color: #ccc;
   }
 }
+
+/* ===== Responsive ===== */
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.4rem;
+  }
+  .description {
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+  }
+  .button {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+  }
+}
